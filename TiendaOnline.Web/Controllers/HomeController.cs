@@ -21,7 +21,7 @@ namespace TiendaOnline.Web.Controllers
         public ActionResult Usuarios()
         {
             return View();
-        }
+        }                                                         
         public JsonResult ListarUsuarios()
         {
             var lista = new List<Usuario>();
