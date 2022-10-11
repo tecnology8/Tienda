@@ -1,0 +1,112 @@
+﻿
+@{
+    ViewBag.Title = "Carrito";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container my-5">
+
+
+    <div class="row">
+
+        <div class="col-sm-12">
+
+            <div class="card">
+
+                <div class="card-body">
+                    <div class="row">
+
+                        <!--Detalle de Productos-->
+                        <div class="col-sm-9"> </div>
+
+                        <!--Detalle Envio-->
+                        <div class="col-sm-3">
+                            <div class="card">
+                                <div class="card-body bg-light">
+                                    <h5 class="card-title">Detalle Envio</h5>
+                                    <form>
+                                        <div class="mb-2">
+                                            <label for="cboprovincia" class="form-label">Provincia: </label>
+                                            <select class="form-select form-select-sm" id="cboprovincia"></select>
+                                        </div>
+
+                                        <div class="mb-2">
+                                            <label for="cbomunicipio" class="form-label">Municipio: </label>
+                                            <select class="form-select form-select-sm" id="cbomunicipio"></select>
+                                        </div>
+
+                                        <div class="mb-2">
+                                            <label for="cbodistrito" class="form-label">Distrito: </label>
+                                            <select class="form-select form-select-sm" id="cbodistrito"></select>
+                                        </div>
+
+                                        <div class="mb-2">
+                                            <label for="txtnombrecontacto" class="form-label">Nombre Contacto: </label>
+                                            <input type="text" class="form-control form-control-sm" id="txtnombrecontacto" autocomplete="off" />
+                                        </div>
+
+                                        <div class="mb-2">
+                                            <label for="txtdireccion" class="form-label">Direccion: </label>
+                                            <input type="text" class="form-control form-control-sm" id="txtdireccion" autocomplete="off" />
+                                        </div>
+
+                                        <div class="mb-2">
+                                            <label for="txttelefono" class="form-label">Telefono: </label>
+                                            <input type="text" class="form-control form-control-sm" id="txttelefono" autocomplete="off" />
+                                        </div>
+                                        <div class="d-grip">
+                                            <button class="btn btn-success" type="button" onclick="RealizarPago()">
+                                                <i class="fab fa-paypal"></i> Terminar y Procesar Pago
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts{
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            ListarProvincias();
+
+        })
+
+        function ListarProvincias() {
+
+            $("<option>").attr({ "value": "00","disabled":"disabled", "selected":"true" }).text("Seleccionar").appendTo("#cboprovincia")
+
+            jQuery.ajax({
+                url: '@Url.Action("ObtenerProvincia", "Tienda")',
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    if (data.lista != null) {
+                        $.each(data.lista, function (i, item) {
+                            $("<option>").attr({ "value": item.Id }).text(item.Descripcion).appendTo("#cboprovincia")
+                        })
+                    }
+                }
+            })
+        }
+
+
+
+    </script>
+
+}
